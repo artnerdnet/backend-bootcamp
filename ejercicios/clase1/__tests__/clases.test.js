@@ -1,5 +1,5 @@
 /* eslint-env jest */
-const Contador = require('../clases')
+const Contador = require('../ejercicio1')
 let carlosContador;
 let vivianaContador;
 
