@@ -23,10 +23,10 @@ module.exports = class Usuario {
       nombre,
       autor
     };
-    this.libros = [libro, ...this.libros];
+    this.libros = [...this.libros, libro];
   };
 
   getBookNames() {
-    return this.libros;
+    return this.libros.map(book => book.nombre);
   };
 }

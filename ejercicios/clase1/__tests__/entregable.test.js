@@ -1,5 +1,5 @@
 /* eslint-env jest */
-const Usuario = require('../ejercicio2')
+const Usuario = require('../entregable')
 let nuevoUsuario;
 
 beforeAll(() => {
@@ -29,12 +29,30 @@ describe('clase usuario', () => {
 
     nuevoUsuario.addBook(nombre, autor);
 
-    const resultado = nuevoUsuario.getBookNames();
+    const resultado = nuevoUsuario.libros;
 
     const resultadoEsperado = [{
       nombre,
       autor
     }];
+
+    expect(resultado).toEqual(resultadoEsperado)
+  });
+  test('getBookNames devuelve un array de los nombres de los libros', () => {
+    const primerLibro = {
+      nombre: 'Rayuela',
+      autor: 'Julio Cortázar'
+    }
+
+    const otroLibro = {
+      nombre: 'La Campana de Cristal',
+      autor: 'Sylvia Plath'
+    }
+
+    nuevoUsuario.addBook(otroLibro.nombre, otroLibro.autor);
+
+    const resultado = nuevoUsuario.getBookNames();
+    const resultadoEsperado = [primerLibro.nombre, otroLibro.nombre]
 
     expect(resultado).toEqual(resultadoEsperado)
   });

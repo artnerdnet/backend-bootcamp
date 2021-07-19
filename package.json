@@ -4,11 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/",
-    "lint": "eslint src/**",
-    "pretest": "npm run lint",
-    "test": "jest --runInBand src",
-    "coverage": "jest --collectCoverageFrom=src/**.js --coverage src"
+    "start": "node ejercicios/",
+    "test": "yarn jest"
   },
   "keywords": [],
   "author": "artnerdnet",
