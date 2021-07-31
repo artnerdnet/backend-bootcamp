@@ -1,5 +1,8 @@
 /* eslint-env jest */
 const Contenedor = require('../entregable')
+
+let nuevoContenedor;
+
 const firstObject = {
   title: 'hat',
   price: '$19.99',
@@ -9,50 +12,42 @@ const secondObject = {
   title: 'scarf',
   price: '$9.50',
   thumbnail: 'https://www.shop.com/scarf.jpg'
-} 
-let nuevoContenedor;
+}
 
 beforeAll(() => {
-  nuevoContenedor = new Contenedor();
+  nuevoContenedor = new Contenedor('productos.txt');
 });
 
-describe('clase container', () => {
-  test('save object', () => {
-    
+describe.only('clase container', () => {
+  test('save object to file', () => {
     const resultado = nuevoContenedor.save(firstObject);
-    const resultadoEsperado = { objectId: 0 }
+    const resultado2 = nuevoContenedor.save(secondObject);
 
-    expect(resultado).toEqual(resultadoEsperado.objectId)
+    expect(resultado).resolves.toBe(0);
+    expect(resultado2).resolves.toBe(1);
+
   });
   test('get object by id', () => {
-    const objectId = 0;
-    const resultado = nuevoContenedor.getById(objectId);
-    const resultadoEsperado = {
-      title: 'hat',
-      price: '$19.99',
-      thumbnail: 'https://www.shop.com/hat.jpg'
-    }
-    expect(resultado).toEqual(resultadoEsperado)
+    const resultado = nuevoContenedor.getById(0);
+    
+    expect(resultado).resolves.toBe(firstObject);
   });
   test('get all objects', () => {
-    nuevoContenedor.save(secondObject);
-    const resultado = nuevoContenedor.getAll()
-    const resultadoEsperado = [firstObject, secondObject]
-
-    expect(resultado).toEqual(resultadoEsperado)
+    const resultado = nuevoContenedor.getAll();
+    const resultadoEsperado = [firstObject, secondObject];
+    
+    expect(resultado).resolves.toBe(resultadoEsperado);
   });
   test('delete object by id', () => {
-    nuevoContenedor.deleteById(1);
-    const resultado = nuevoContenedor.getAll();
+    const resultado = nuevoContenedor.deleteById(1);
     const resultadoEsperado = [firstObject];
-
-    expect(resultado).toEqual(resultadoEsperado);
+    
+    expect(resultado).resolves.toBe(resultadoEsperado);
   });
   test('delete all objects', () => {
-    nuevoContenedor.deleteAll();
-    const resultado = nuevoContenedor.getAll();
-    const resultadoEsperado = [];
+    const resultado = nuevoContenedor.deleteAll()
+    const resultadoEsperado = null;
 
-    expect(resultado).toEqual(resultadoEsperado)
+    expect(resultado).toBe(resultadoEsperado);
   });
 })
