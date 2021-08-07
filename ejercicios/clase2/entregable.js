@@ -29,6 +29,7 @@ module.exports = class Contenedor {
       .catch((error) => {
         throw new Error(error);
       });
+    
     return items;
   }
 
