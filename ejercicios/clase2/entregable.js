@@ -71,8 +71,24 @@ module.exports = class Contenedor {
   };
 
   async getById(id) {
-    const items = await this.getAll();
-    return JSON.parse(items).find((item) => item.id === id);
+    return await fs.promises
+      .readFile(this.filename)
+      .then(data => {
+        const items = JSON.parse(data);
+        return items.find((item) => item.id == id)
+      })
+    .catch((error) => {console.log(error, 'error')})
+  }
+
+  async updateById(product) {
+    return await fs.promises
+      .readFile(this.filename)
+      .then(data => {
+        const items = JSON.parse(data);
+
+        return items.map((item) => { return item.id == product.id ? product : item; });
+      })
+    .catch((error) => {console.log(error, 'error')})
   }
 
   async deleteById(id) {

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingreso de productos</title>
+  </head>
+  <body>
+    <form name="productForm">
+      <label for="pid">Product id:</label><br />
+      <input type="text" id="pid" name="pid" placeholder="1" /><br />
+      <label for="ptitle">Product title:</label><br />
+      <input type="text" id="ptitle" name="ptitle" placeholder="Scarf" /><br />
+      <label for="pprice">Price:</label><br />
+      <input
+        type="text"
+        id="pprice"
+        name="pprice"
+        placeholder="$2.99"
+      /><br /><br />
+      <label for="pthumbnail">Thumbnail URL:</label><br />
+      <input
+        type="text"
+        id="pthumbnail"
+        name="pthumbnail"
+        placeholder="https://www.google.com/scarf.jpg"
+      /><br /><br />
+      <input type="submit" value="Enviar" />
+    </form>
+  </body>
+  <script>
+    const button = document.querySelector('form[name="productForm"] > button');
+    button.addEventListener(function () {
+      e.preventDefault();
+      const fd = new FormData(form);
+      console.log(fd, ">> form");
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener("load", (e) => {
+        console.log(e.target.responseText);
+      });
+      xhr.addEventListener("error", (e) => {
+        console.log(e);
+      });
+      xhr.open("PUT", `http://holi:8080/productos/${fd.pid}`);
+      xhr.send(fd);
+    });
+  </script>
+</html>

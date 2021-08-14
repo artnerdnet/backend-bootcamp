@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --inspect ./ejercicios/clase2/entregable.js",
     "test": "yarn jest",
-    "express": "nodemon --inspect ./ejercicios/clase3/serverExpress.js"
+    "express": "nodemon --inspect ./ejercicios/clase4/serverExpress.js"
   },
   "keywords": [],
   "author": "artnerdnet",
