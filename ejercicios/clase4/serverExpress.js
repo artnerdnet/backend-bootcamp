@@ -7,6 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs');
+app.use('/views', express.static('views'));
 
 const { Router } = express; 
 const router = new Router();
@@ -74,11 +75,7 @@ router.post('/api/productos', (req, res, next) => {
 })
 
 router.put('/api/productos/:id', (req, res, next) => {
-  const { body, params } = req;
-  // console.log(  body.id, '>>>>>req')
-
-
-  var form = new formidable.IncomingForm();
+  const form = new formidable.IncomingForm();
 
   form.parse(req, (err, fields, files) => {
     console.log(fields);
@@ -91,23 +88,6 @@ router.put('/api/productos/:id', (req, res, next) => {
       res.send(data)
     })
   });
-  // 
-  // console.log(  res.json(body)  , '>>>>>req')
-  // res.json(req.body);
-  // fs.promises
-      // .readFile('product.txt')
-      // .then(data => {
-        // res.send(body)
-        // const item = JSON.parse(data);
-        // nuevoContenedor.updateById(body).then(data => {
-        //   res.send(data)
-        // })
-      //   .catch(error => {
-      //     throw new Error(error)
-      //   })
-        
-      // })
-    // .catch((error) => {console.log(error, 'error')})
 })
 
 router.delete('/api/productos/:id', (req, res, next) => {
@@ -120,17 +100,13 @@ router.delete('/api/productos/:id', (req, res, next) => {
 })
 
 app.get('/', function(req, res) {
-  var mascots = [
-    { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012},
-    { name: 'Tux', organization: "Linux", birth_year: 1996},
-    { name: 'Moby Dock', organization: "Docker", birth_year: 2013}
-  ];
-  var tagline = "No programming concept is complete without a cute animal mascot.";
+  nuevoContenedor.getAll().then(data => {
+    res.render('pages/index', {
+      products: data
+    });
+  })
 
-  res.render('pages/index', {
-    mascots: mascots,
-    tagline: tagline
-  });
+ 
 });
 
 app.use('/', router)

@@ -1,0 +1,33 @@
+#product-list {
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+}
+
+.product__item {
+    margin: 8px;
+}
+
+.product__buttonContainer {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+button {
+    border-radius: 10px;
+    border: none;
+    margin: 2px;
+    padding: 4px;
+}
+
+button:hover {
+    background-color: bisque;
+}
+
+.button__destructive { 
+    background-color: rgb(206, 121, 121);
+}
+
+.button__destructive:hover { 
+    background-color: rgb(163, 73, 73);
+}
