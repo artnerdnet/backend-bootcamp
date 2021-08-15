@@ -85,10 +85,10 @@ module.exports = class Contenedor {
       .readFile(this.filename)
       .then(data => {
         const items = JSON.parse(data);
-
-        return items.map((item) => { return item.id == product.id ? product : item; });
+        console.log(items, '.>> prod')
+        const updatedItems = items.map((item) => { return item.id === Number(product.id) ? product : item; });
+        this.writeFile(this.filename, JSON.stringify(updatedItems))
       })
-    .catch((error) => {console.log(error, 'error')})
   }
 
   async deleteById(id) {
@@ -109,10 +109,10 @@ module.exports = class Contenedor {
 
   deleteAll() {
     try {
-      fs.unlinkSync(this.filename);
+      fs.unlinkSync(this.filename);postmpospost
       return null;
     } catch (error) {
-      if (error?.code === "ENOENT") {
+      if (error.code === "ENOENT") {
         console.log("file not found");
         return null;
       }

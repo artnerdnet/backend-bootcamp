@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingreso de productos</title>
+  </head>
+  <body>
+    <div id="output"></div>
+
+    <form name="productForm" id="productForm">
+      <label for="id" required>Product id:</label><br />
+      <input type="text" id="id" name="id" placeholder="1" /><br />
+      <label for="title">Product title:</label><br />
+      <input type="text" id="title" name="title" placeholder="Scarf" /><br />
+      <label for="price">Price:</label><br />
+      <input
+        type="text"
+        id="price"
+        name="price"
+        placeholder="$2.99"
+      /><br /><br />
+      <label for="thumbnail">Thumbnail URL:</label><br />
+      <input
+        type="text"
+        id="thumbnail"
+        name="thumbnail"
+        placeholder="https://www.google.com/scarf.jpg"
+      /><br /><br />
+      <button type="submit">enviar</button>
+    </form>
+  </body>
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"> -->
+  <script>
+    const form = document.getElementById('productForm');
+    const button = document.querySelector('form[name="productForm"] > button');
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const xhr = new XMLHttpRequest();
+      xhr.addEventListener("load", (e) => {
+        console.log(e.target.responseText);
+      });
+      xhr.addEventListener("error", (e) => {
+        console.log(e);
+      });
+      var productId = document.forms['productForm'].elements['id'].value;
+      // xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+      xhr.open("PUT", `http://localhost:8080/api/productos/${productId}`);
+      xhr.send(fd);
+    });
+  </script>
+</html>
