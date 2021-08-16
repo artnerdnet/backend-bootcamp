@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="./index.css">
     <link href="/views/pages/index.css" rel="stylesheet" type="text/css">
-
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,34 +14,42 @@
           <img class="product__image" width="250px" src=<%= products[i].thumbnail %> />
           <h2><%= products[i].title %></h2>
           <div class="product__buttonContainer">
-            <button>edit</button>
+            <button onclick='editProduct(<%= products[i].id %>)' id=edit-button-<%= products[i].id %>>edit</button>
             <button class="button__destructive">delete</button>
           </div>
         </div>
      <% } %>
     </div>
+    <div id="product-modal" class="modal">
 
-    <form name="productForm" id="productForm">
-      <label for="id" required>Product id:</label><br />
-      <input type="text" id="id" name="id" placeholder="1" /><br />
-      <label for="title">Product title:</label><br />
-      <input type="text" id="title" name="title" placeholder="Scarf" /><br />
-      <label for="price">Price:</label><br />
-      <input
-        type="text"
-        id="price"
-        name="price"
-        placeholder="$2.99"
-      /><br /><br />
-      <label for="thumbnail">Thumbnail URL:</label><br />
-      <input
-        type="text"
-        id="thumbnail"
-        name="thumbnail"
-        placeholder="https://www.google.com/scarf.jpg"
-      /><br /><br />
-      <button type="submit">enviar</button>
-    </form>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <form name="productForm" id="productForm">
+          <label for="id" required>Product id:</label><br />
+          <input type="text" id="id" name="id"   <% if(locals.selectedProduct) {%> value="locals.selectedProduct.id" <% } %> /><br />
+          <label for="title">Product title:</label><br />
+          <input type="text" id="title" name="title" placeholder="Scarf" /><br />
+          <label for="price">Price:</label><br />
+          <input
+            type="text"
+            id="price"
+            name="price"
+            placeholder="$2.99"
+          /><br /><br />
+          <label for="thumbnail">Thumbnail URL:</label><br />
+          <input
+            type="text"
+            id="thumbnail"
+            name="thumbnail"
+            placeholder="https://www.google.com/scarf.jpg"
+          /><br /><br />
+          <button type="submit">enviar</button>
+        </form>
+      </div>
+    
+    </div>
+    
   </body>
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"> -->
   <script>
@@ -60,9 +66,23 @@
         console.log(e);
       });
       var productId = document.forms['productForm'].elements['id'].value;
-      // xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
       xhr.open("PUT", `http://localhost:8080/api/productos/${productId}`);
       xhr.send(fd);
     });
+  </script>
+  <script>
+    const modal = document.getElementById("product-modal");
+    const editProduct = (id) => {
+      locals.appState[0].selectedProduct = {id}
+      modal.style.display = "block";
+    }
+    const closeModal = () => {
+      modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
   </script>
 </html>

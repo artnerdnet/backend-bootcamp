@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.set('view engine', 'ejs');
-app.use('/views', express.static('views'));
+app.use('/views/', express.static('views'));
 
 const { Router } = express; 
 const router = new Router();
@@ -100,14 +100,20 @@ router.delete('/api/productos/:id', (req, res, next) => {
 })
 
 app.get('/', function(req, res) {
+  const show_modal = !!req.body.modal; // Cast to boolean
+
   nuevoContenedor.getAll().then(data => {
     res.render('pages/index', {
-      products: data
+      products: data,
+      show_modal,
+      selectedProduct: null,
+      appState: [{selectedProduct: null}]
     });
   })
-
- 
 });
+
+// app.use(express.static(__dirname + '/public'));
+
 
 app.use('/', router)
 
